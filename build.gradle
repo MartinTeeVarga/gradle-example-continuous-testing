@@ -21,11 +21,10 @@ class TestWatcher extends Test {
     void executeTests(IncrementalTaskInputs inputs) {
         if (inputs.incremental) {
             def outputDir = this.project.sourceSets['test'].output.classesDir.absolutePath
-            def mainDir = this.project.sourceSets['main'].output.classesDir.absolutePath
             this.filter.includePatterns = []
             inputs.outOfDate { InputFileDetails change ->
                 def candidate = change.file.absolutePath
-                if (candidate.endsWith('.class') && !candidate.startsWith(mainDir)) {
+                if (candidate.endsWith('.class')) {
                     candidate = candidate
                             .replace('.class', '')
                             .replace(outputDir, '')
